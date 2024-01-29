@@ -1,6 +1,6 @@
-!pip install streamlit
-!pip install yfinance
-!pip install pyngrok
+pip install streamlit
+pip install yfinance
+pip install pyngrok
 
 
 import streamlit as st
