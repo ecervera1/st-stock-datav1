@@ -4,30 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
-import streamlit as st
-import subprocess
 
-# Streamlit app layout
-st.title('Upgrade pip in Streamlit App')
-
-# Button to upgrade pip
-if st.button('Upgrade pip'):
-    try:
-        # Run the pip upgrade command
-        result = subprocess.run(
-            ["/home/adminuser/venv/bin/python", "-m", "pip", "install", "--upgrade", "pip"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-
-        # Check if the upgrade was successful
-        if result.returncode == 0:
-            st.success("pip was successfully upgraded.")
-        else:
-            st.error(f"Error upgrading pip: {result.stderr}")
-    except Exception as e:
-        st.error(f"An error occurred: {str(e)}")
 
 
 # Function to scrape stock data
