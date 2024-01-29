@@ -67,11 +67,16 @@ if st.button('Run'):
     # Loop through each ticker, scrape the data, and add it to the DataFrame
     stock_data_df = pd.DataFrame()
     for ticker in tickers:
-        try:
-            ticker_data = scrape_stock_data(ticker)
-            stock_data_df = stock_data_df.append(pd.DataFrame([ticker_data], index=[ticker]))
-        except Exception as e:
-            st.error(f"Error fetching data for {ticker}: {e}")
+      try:
+          ticker_data = scrape_stock_data(ticker)
+          # Ensure ticker_data is a dictionary and can be converted to a DataFrame
+          if isinstance(ticker_data, dict):
+              new_df = pd.DataFrame([ticker_data], index=[ticker])
+              stock_data_df = stock_data_df.append(new_df, ignore_index=True)
+          else:
+              st.error(f"Data for {ticker} is not in expected format")
+      except Exception as e:
+          st.error(f"Error fetching data for {ticker}: {e}")
 
     # Transpose the DataFrame
     stock_data_transposed = stock_data_df.transpose()
