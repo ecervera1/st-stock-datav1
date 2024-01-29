@@ -83,7 +83,7 @@ if st.button('Run'):
     # Formatting the data
     for col in stock_data_df.columns:
         if col != "52W Range":  # Exclude the "52W Range" column
-            stock_data_df[col] = stock_data_df[col].apply(lambda x: f'{x:.2f}' if isinstance(x, int) else x)
+            stock_data_df[col] = stock_data_df[col].apply(lambda x: f'{x:.2f}' if isinstance(x, float) else x)
 
 
     # Display the DataFrame as a table
