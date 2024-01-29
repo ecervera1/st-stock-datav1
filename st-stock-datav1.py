@@ -4,9 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
-
-
-
 # Function to scrape stock data
 def scrape_stock_data(ticker):
     stock = yf.Ticker(ticker)
