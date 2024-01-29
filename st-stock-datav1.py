@@ -42,7 +42,6 @@ def fetch_stock_performance(tickers, start_date, end_date):
 st.title('Portfolio Management - Stock Comparative Analysis')
 
 # Input for stock tickers
-#user_input = st.text_input("Enter stock tickers separated by commas", "LLY, ABT, MRNA")
 user_input = st.text_input("Enter stock tickers separated by commas", "LLY, ABT, MRNA, JNJ, BIIB, BMY, PFE, AMGN, WBA")
 
 # Input for date range
@@ -61,22 +60,22 @@ if st.button('Run'):
     st.markdown(f'({start_date} - {end_date})')
     # Plotting the interactive line chart
     st.line_chart(data['Adj Close'])
-    #st.title(f'Stock Performance Chart ({start_date} - {end_date})')
     st.title('Stock Data')
 
-    # Loop through each ticker, scrape the data, and add it to the DataFrame
-    stock_data_df = pd.DataFrame()
+    # Create an empty list to store dictionaries of stock data
+    stock_data_list = []
+    
+    
+    # Loop through each ticker, scrape the data, and add it to the list
     for ticker in tickers:
-      try:
-          ticker_data = scrape_stock_data(ticker)
-          # Ensure ticker_data is a dictionary and can be converted to a DataFrame
-          if isinstance(ticker_data, dict):
-              new_df = pd.DataFrame([ticker_data], index=[ticker])
-              stock_data_df = stock_data_df.append(new_df, ignore_index=True)
-          else:
-              st.error(f"Data for {ticker} is not in expected format")
-      except Exception as e:
-          st.error(f"Error fetching data for {ticker}: {e}")
+        try:
+            ticker_data = scrape_stock_data(ticker)
+            stock_data_list.append(ticker_data)
+        except Exception as e:
+            st.error(f"Error fetching data for {ticker}: {e}")
+
+    # Create a DataFrame from the list of dictionaries
+    stock_data_df = pd.DataFrame(stock_data_list, index=tickers)
 
     # Transpose the DataFrame
     stock_data_transposed = stock_data_df.transpose()
