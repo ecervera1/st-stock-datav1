@@ -80,11 +80,10 @@ if st.button('Run'):
     # Transpose the DataFrame
     stock_data_transposed = stock_data_df.transpose()
 
-    # Formatting the data
-    for col in stock_data_df.columns:
+    for col in stock_data_transposed.columns:
         if col != "52W Range":  # Exclude the "52W Range" column
-            #stock_data_df[col] = stock_data_df[col].apply(lambda x: f'{x:.2f}' if isinstance(x, float) else x)
-            stock_data_df[col] = stock_data_df[col].apply(lambda x: f'{x:.2f}' if isinstance(x, float) else x)
+            stock_data_transposed[col] = stock_data_transposed[col].apply(
+                lambda x: f'{x:.2f}' if isinstance(x, float) else x)
 
 
     # Display the DataFrame as a table
