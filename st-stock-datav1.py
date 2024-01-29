@@ -1,8 +1,3 @@
-pip install streamlit
-pip install yfinance
-pip install pyngrok
-
-
 import streamlit as st
 import yfinance as yf
 import pandas as pd
