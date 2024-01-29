@@ -80,6 +80,8 @@ if st.button('Run'):
     # Transpose the DataFrame
     stock_data_transposed = stock_data_df.transpose()
 
+    stock_data_transposed.fillna('-', inplace=True)
+
     for col in stock_data_transposed.columns:
         if col != "52W Range":  # Exclude the "52W Range" column
             stock_data_transposed[col] = stock_data_transposed[col].apply(
