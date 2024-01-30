@@ -123,3 +123,33 @@ if st.button('Run'):
 
     # Display the DataFrame as a table
     st.table(stock_data_transposed)
+
+    # CREATING CHARTS:
+
+    # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
+    fig, axs = plt.subplots(len(tickers), 6, figsize=(32, 8 * len(tickers)))
+
+    for i, ticker in enumerate(tickers):
+        # Ticker Labels (First Column)
+        axs[i, 0].axis('off')
+        axs[i, 0].text(0.5, 0.5, ticker, ha='center', va='center', fontsize=20)
+
+        # Market Cap Visualization (Second Column)
+        ax1 = axs[i, 1]
+        market_cap = stock_data_list["Market Cap (B)"]
+        market_cap_in_billions = market_cap / 1_000_000_000
+
+        circle = plt.Circle((0.5, 0.5), 0.4, color='lightblue')
+        ax1.add_artist(circle)
+
+        # Create a shadow effect for the text
+        text = ax1.text(0.5, 0.5, f"{market_cap_in_billions:.2f}B", ha='center', va='center', fontsize=55, fontweight='bold', color='white')
+        text.set_path_effects([
+            path_effects.Stroke(linewidth=2, foreground='black'),
+            path_effects.Normal()
+        ])
+
+        ax1.set_xlim(0, 1)
+        ax1.set_ylim(0, 1)
+        ax1.axis('off')
+    st.pyplot(fig)
