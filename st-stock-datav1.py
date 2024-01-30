@@ -99,7 +99,13 @@ if st.button('Run'):
     data = fetch_stock_performance(tickers, start_date, end_date)
 
     st.title('Stock Performance Chart')
-    st.markdown(f'({start_date} - {end_date})')
+    # Format the date range for the selected date range
+    formatted_start_date = start_date.strftime("%Y-%m-%d")
+    formatted_end_date = end_date.strftime("%Y-%m-%d")
+    
+    st.markdown(f'({formatted_start_date} - {formatted_end_date})')
+    #st.markdown(f'({start_date} - {end_date})')
+    
     # Plotting the interactive line chart
     st.line_chart(data['Adj Close'])
 
@@ -108,7 +114,10 @@ if st.button('Run'):
     data_last_10_years = fetch_stock_performance(tickers, last_10_years_start_date, last_10_years_end_date)
 
     st.title('Stock Performance Chart (Last 10 Years)')
-    st.markdown(f'({last_10_years_start_date} - {last_10_years_end_date})')
+    formatted_last_10_years_start_date = last_10_years_start_date.strftime("%b-%y")
+    formatted_last_10_years_end_date = last_10_years_end_date.strftime("%b-%y")
+    
+    st.markdown(f'({formatted_last_10_years_start_date} - {formatted_last_10_years_end_date})')
 
     # Plotting the interactive line chart for the last 10 years
     st.line_chart(data_last_10_years['Adj Close'])
