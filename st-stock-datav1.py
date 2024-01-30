@@ -24,7 +24,7 @@ def scrape_stock_data(ticker):
             "52W Range": f"{info.get('fiftyTwoWeekLow')} - {info.get('fiftyTwoWeekHigh')}",
             "Div Yield": info.get("dividendYield"),
             "Beta": info.get("beta"),
-            "Forward Annual Dividend Yield": info.get("dividendYield") or 0,
+            "Forward Annual Dividend Yield": info.get("dividendYield") or "-",
             "EPS per Year": info.get("trailingEps"),
             "Revenue Growth": info.get("revenueGrowth"),
             "Earnings Growth": info.get("earningsGrowth")
