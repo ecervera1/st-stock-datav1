@@ -167,56 +167,48 @@ if st.button('Run'):
         ax1.set_ylim(0, 1)
         ax1.axis('off')
 
-    # Revenue
-    # Loop through each ticker to create revenue comparison bar chart
+    # ROE ROA and PM
+    # Adjust bar width for less padding
+    bar_width = 1
+
+    # Iterate through tickers
     for i, ticker in enumerate(tickers):
-        financials = get_financials(ticker)
-        current_year_revenue = financials.loc["Total Revenue"][0]
-        previous_year_revenue = financials.loc["Total Revenue"][1]
-    
-        current_year_revenue_billion = current_year_revenue / 1e9
-        previous_year_revenue_billion = previous_year_revenue / 1e9
-        growth = ((current_year_revenue_billion - previous_year_revenue_billion) / previous_year_revenue_billion) * 100
-    
-        # Determine line color based on growth direction
-        line_color = 'green' if growth > 0 else 'red'
-    
-        # Create a subplot for revenue comparison
+        # Scrape data for the ticker
+        stock_data = scrape_stock_data(ticker)
+
+        # Extract Profit Margin, ROA, and ROE values and convert to percentage
+        profit_margin = stock_data["Profit Margin"] * 100
+        roa = stock_data["ROA"] * 100
+        roe = stock_data["ROE"] * 100
+
+        # Create a horizontal bar chart with three bars side by side
         ax2 = axs[i, 2]
-    
-        # Creating a bar chart
-        bars = ax2.bar(["2022", "2023"], [previous_year_revenue_billion, current_year_revenue_billion], color=[color_2022, color_2023])
-        ax2.set_title(f"{ticker} Revenue Comparison (2022 vs 2023)")
-    
-        # Adjust Y-axis limits to leave space above the bars
-        ax2.set_ylim(0, max(previous_year_revenue_billion, current_year_revenue_billion) * 1.2)
-    
-        # Adding value labels inside of the bars at the top in white
-        for bar in bars:
-            yval = bar.get_height()
-            ax2.text(bar.get_x() + bar.get_width() / 2, yval * 0.95, round(yval, 2), ha='center', va='top', fontsize=12, fontweight='bold', color='white')
-    
-        # Adding year labels inside of the bars toward the bottom
-        for i, bar in enumerate(bars):
-            ax2.text(bar.get_x() + bar.get_width() / 2, -0.08, ["2022", "2023"][i], ha='center', va='bottom', fontsize=12, fontweight='bold', color='white')
-    
-        # Adding growth line with color based on direction
-        ax2.plot(["2022", "2023"], [previous_year_revenue_billion, current_year_revenue_billion], color=line_color, marker='o', linestyle='-', linewidth=2)
-        ax2.text(1, current_year_revenue_billion * 1.05, f"{round(growth, 2)}%", color=line_color, ha='center', va='bottom', fontsize=12, fontweight='bold')
-    
-        # Remove axes lines
+        bars = ax2.barh([1, 2, 3], [profit_margin, roa, roe], height=bar_width, color=['#A3C5A8', '#B8D4B0', '#C8DFBB'])
+
+        bar_labels = ["Profit Margin", "ROA", "ROE"]
+        for bar, label in zip(bars, bar_labels):
+            ax2.text(bar.get_x() - 1, bar.get_y() + bar.get_height()/2, label, ha='right', va='center', fontsize=14, fontweight='bold', color='black')
+
+        # Add data values as text next to each bar (excluding 0 values)
+        for bar, value in zip(bars, [profit_margin, roa, roe]):
+            if value != 0:  # Check if the value is not equal to 0
+                text_x = value - 5 if value < 0 else value - 1
+                ax2.text(text_x, bar.get_y() + bar.get_height()/2, f"{value:.2f}%", ha='left' if value < 0 else 'right', va='center', fontsize=14, color='black')
+
+        # Set the title
+        ax2.set_title(f"{ticker} - Financial Metrics")
+
+        # Remove axes
         ax2.spines['top'].set_visible(False)
         ax2.spines['right'].set_visible(False)
         ax2.spines['bottom'].set_visible(False)
         ax2.spines['left'].set_visible(False)
-    
-        # Remove x and y ticks
+
+        # Remove x and y ticks and labels
         ax2.set_xticks([])
         ax2.set_yticks([])
-
-
-    plt.tight_layout()
-    st.pyplot(fig)
+        ax2.set_xticklabels([])
+        ax2.set_yticklabels([])
 
         
         
