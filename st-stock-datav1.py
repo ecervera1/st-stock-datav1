@@ -130,7 +130,7 @@ if st.button('Run'):
 
     # Creating Charts
     num_subplots = len(tickers) + 1
-    figsize_width =  26
+    figsize_width =  20
     figsize_height = num_subplots * 4  # Height of the entire figure
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
@@ -140,7 +140,7 @@ if st.button('Run'):
     labels = ["Ticker", "Market Cap", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
     for j in range(5):
         axs[0, j].axis('off')
-        axs[0, j].text(0.5, 0.5, labels[j], ha='center', va='center', fontsize=20, fontweight='bold')
+        axs[0, j].text(0.5, 0.5, labels[j], ha='center', va='center', fontsize=35, fontweight='bold')
 
     
     for i, ticker in enumerate(tickers, start=1):
@@ -169,7 +169,7 @@ if st.button('Run'):
 
         # Ticker Labels (First Column)
         axs[i, 0].axis('off')
-        axs[i, 0].text(0.5, 0.5, ticker, ha='center', va='center', fontsize=30)
+        axs[i, 0].text(0.5, 0.5, ticker, ha='center', va='center', fontsize=35)
 
         # Market Cap Visualization (Second Column)
         ax1 = axs[i, 1]
