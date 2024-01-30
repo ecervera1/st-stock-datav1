@@ -7,6 +7,17 @@ from datetime import datetime
 #import portfolio_optimization_1 as po1
 #import portfolio_optimization_2 as po2
 
+# Hide the GitHub link and main menu using CSS styles
+st.write("""
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+""", unsafe_allow_html=True)
+
+
+
+
 # Function to scrape summary stock data
 def scrape_stock_data(ticker):
     stock = yf.Ticker(ticker)
