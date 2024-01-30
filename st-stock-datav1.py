@@ -133,16 +133,25 @@ if st.button('Run'):
     # Display the DataFrame as a table
     st.table(stock_data_transposed)
 
+    # Subplots with row and column headers
     figsize_width = 22
-    figsize_height = 5 * 4
+    figsize_height = 6 * 4  # One extra row for column headers
     num_subplots = len(tickers)
-    row_headers = ["Ticker", "Market Cap", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
+    row_headers = ["Market Cap", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
+    column_headers = tickers
+
     fig, axs = plt.subplots(5, num_subplots + 1, figsize=(figsize_width, figsize_height))
 
-    for j, ticker in enumerate(tickers):
-        market_caps = {ticker: scrape_market_cap(ticker) for ticker in tickers}
-        max_market_cap = max(market_caps.values())
-        stock_data = scrape_stock_data(ticker)
+    # Add column headers in the first row
+    for j, header in enumerate(column_headers):
+        axs[0, j + 1].axis('off')  # j + 1 because the first column is for row headers
+        axs[0, j + 1].text(0.5, 0.5, header, ha='center', va='center', fontsize=20, fontweight='bold')
+
+    # Add row headers in the first column
+    for i, header in enumerate(row_headers):
+        axs[i + 1, 0].axis('off')  # i + 1 to start from the second row
+        axs[i + 1, 0].text(0.5, 0.5, header, ha='center', va='center', fontsize=20, fontweight='bold')
+
 
         # Function to scrape market cap data
         def scrape_market_cap(ticker):
