@@ -125,6 +125,10 @@ if st.button('Run'):
     st.table(stock_data_transposed)
 
     # Creating Charts
+    market_caps = {ticker: scrape_market_cap(ticker) for ticker in tickers}
+    max_market_cap = max(market_caps.values(), default=1)
+
+    
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
     fig, axs = plt.subplots(len(tickers), 6, figsize=(24, 8 * len(tickers)))
 
