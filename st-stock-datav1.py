@@ -140,7 +140,7 @@ if st.button('Run'):
     labels = ["Ticker", "Market Cap", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
     for j in range(5):
         axs[0, j].axis('off')
-        axs[0, j].text(0.5, 0.5, labels[j], ha='center', va='center', fontsize=35, fontweight='bold')
+        axs[0, j].text(0.5, 0.5, labels[j], ha='center', va='center', fontsize=25, fontweight='bold')
 
     
     for i, ticker in enumerate(tickers, start=1):
@@ -169,7 +169,7 @@ if st.button('Run'):
 
         # Ticker Labels (First Column)
         axs[i, 0].axis('off')
-        axs[i, 0].text(0.5, 0.5, ticker, ha='center', va='center', fontsize=35)
+        axs[i, 0].text(0.5, 0.5, ticker, ha='center', va='center', fontsize=30)
 
         # Market Cap Visualization (Second Column)
         ax1 = axs[i, 1]
@@ -188,36 +188,33 @@ if st.button('Run'):
         bar_width = 1
         
         # ROE ROA and PM      
+        # Financial Metrics (Third Column)
         ax2 = axs[i, 2]
-        bars = ax2.barh([1, 2, 3], [profit_margin, roa, roe], height=bar_width, color=['#A3C5A8', '#B8D4B0', '#C8DFBB'])
-
+        metrics = [profit_margin, roa, roe]
+        metric_names = ["Profit Margin", "ROA", "ROE"]
+        bars = ax2.barh(metric_names, metrics, color=['#A3C5A8', '#B8D4B0', '#C8DFBB'])
         
-
-        bar_labels = ["Profit Margin", "ROA", "ROE"]
-        for bar, label in zip(bars, bar_labels):
-            ax2.text(bar.get_x() - 1, bar.get_y() + bar.get_height()/2, label, ha='right', va='center', fontsize=14, fontweight='bold', color='black')
-
-        # Add data values as text next to each bar (excluding 0 values)
-        for bar, value in zip(bars, [profit_margin, roa, roe]):
-            if value != 0:  # Check if the value is not equal to 0
-                text_x = value - 5 if value < 0 else value - 1
-                ax2.text(text_x, bar.get_y() + bar.get_height()/2, f"{value:.2f}%", ha='left' if value < 0 else 'right', va='center', fontsize=16, color='black')
-
-        #ax2.set_aspect('equal', adjustable='box')
-        # Set the title
-        #ax2.set_title(f"{ticker} - Financial Metrics")
-
-        # Remove axes
+        for bar, label, value in zip(bars, metric_names, metrics):
+            # Label positioning inside or outside the bar based on value
+            label_x_position = bar.get_width() - 5 if bar.get_width() > 0 else bar.get_width() + 5
+            value_x_position = bar.get_width() + 5 if bar.get_width() > 0 else bar.get_width() - 5
+        
+            # Preventing overlap by adjusting position
+            if abs(label_x_position - value_x_position) < 10:  # Threshold for overlap
+                label_x_position = value_x_position - 10 if value_x_position > 0 else value_x_position + 10
+        
+            ax2.text(label_x_position, bar.get_y() + bar.get_height()/2, label, 
+                     ha='right' if bar.get_width() > 0 else 'left', va='center', fontsize=14)
+            ax2.text(value_x_position, bar.get_y() + bar.get_height()/2, f"{value:.2f}%", 
+                     ha='left' if bar.get_width() > 0 else 'right', va='center', fontsize=14)
+        
         ax2.spines['top'].set_visible(False)
         ax2.spines['right'].set_visible(False)
         ax2.spines['bottom'].set_visible(False)
         ax2.spines['left'].set_visible(False)
-
-        # Remove x and y ticks and labels
         ax2.set_xticks([])
         ax2.set_yticks([])
-        ax2.set_xticklabels([])
-        ax2.set_yticklabels([])
+
 
         # Revenue Comparison (Third Column)
         ax3 = axs[i, 3]
