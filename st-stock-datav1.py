@@ -8,19 +8,20 @@ from datetime import datetime
 #import portfolio_optimization_2 as po2
 
 
+
+
 custom_css = """
 <style>
-    .stToolbarActions {
+    button[kind="header"] {
         display: none;
     }
 
-    .stActionButtonIcon {
+    div[data-testid="stActionButtonIcon"] {
         display: none;
     }
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
-
 
 
 
