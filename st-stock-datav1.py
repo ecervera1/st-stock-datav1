@@ -75,22 +75,47 @@ user_input = st.text_input("Enter stock tickers separated by commas", "LLY, ABT,
 start_date = st.date_input("Start Date", pd.to_datetime("2023-01-01"))
 end_date = st.date_input("End Date", pd.to_datetime("2024-01-22"))
 
+# Button to run the scraper and plot stock performance
 if st.button('Run'):
     # Split the user input into a list of tickers
-    tickers = [ticker.strip().upper() for ticker in user_input.split(',')]
+    tickers = [ticker.strip() for ticker in user_input.split(',')]
 
-    # Fetch and Plot Stock Performance
-    performance_data = fetch_stock_performance(tickers, start_date, end_date)
-    if not performance_data.empty:
-        st.title('Stock Performance Chart')
-        st.markdown(f'({start_date} - {end_date})')
-        st.line_chart(performance_data['Adj Close'])
+    # Plot stock performance
+    data = fetch_stock_performance(tickers, start_date, end_date)
 
-    # Fetch Summary Stock Data
-    stock_summaries = [scrape_stock_summary(ticker) for ticker in tickers]
-    stock_summary_df = pd.DataFrame(stock_summaries, index=tickers).transpose()
-    stock_summary_df.fillna('-', inplace=True)
+    st.title('Stock Performance Chart')
+    st.markdown(f'({start_date} - {end_date})')
+    # Plotting the interactive line chart
+    st.line_chart(data['Adj Close'])
     st.title('Stock Data')
-    st.table(stock_summary_df)
+
+    # Create an empty list to store dictionaries of stock data
+    stock_data_list = []
+    
+    
+    # Loop through each ticker, scrape the data, and add it to the list
+    for ticker in tickers:
+        try:
+            ticker_data = scrape_stock_data(ticker)
+            stock_data_list.append(ticker_data)
+        except Exception as e:
+            st.error(f"Error fetching data for {ticker}: {e}")
+
+    # Create a DataFrame from the list of dictionaries
+    stock_data_df = pd.DataFrame(stock_data_list, index=tickers)
+
+    # Transpose the DataFrame
+    stock_data_transposed = stock_data_df.transpose()
+
+    stock_data_transposed.fillna('-', inplace=True)
+
+    for col in stock_data_transposed.columns:
+        if col != "52W Range":  # Exclude the "52W Range" column
+            stock_data_transposed[col] = stock_data_transposed[col].apply(
+                lambda x: f'{x:.2f}' if isinstance(x, float) else x)
+
+
+    # Display the DataFrame as a table
+    st.table(stock_data_transposed)
 
 
