@@ -11,6 +11,7 @@ def scrape_stock_summary(ticker):
         info = stock.info
 
         return {
+            "Price": info.get("currentPrice"),
             "Market Cap (B)": info.get("marketCap") / 1e9 if info.get("marketCap") else None, 
             "PE Ratio": info.get("trailingPE"),
             "PEG Ratio": info.get("pegRatio"),
@@ -18,8 +19,8 @@ def scrape_stock_summary(ticker):
             "ROA": info.get("returnOnAssets"),
             "ROE": info.get("returnOnEquity"),
             "52W Range": f"{info.get('fiftyTwoWeekLow')} - {info.get('fiftyTwoWeekHigh')}",
-            "Div Yield": info.get("dividendYield"),
-            "Price": info.get("currentPrice")
+            "Div Yield": info.get("dividendYield")
+            
         }
     except Exception as e:
         st.error(f"Error fetching summary data for {ticker}: {e}")
@@ -110,7 +111,10 @@ if st.button('Run'):
 
             # Market Cap
             market_cap = stock_summaries[i].get("Market Cap (B)", 0)
-            axs[i, 2].pie([market_cap, 100-market_cap], labels=[f"{market_cap}B", ""], startangle=90, counterclock=False)
+            if market_cap > 0:  # Ensure positive value for market cap
+                axs[i, 2].pie([market_cap, 100-market_cap], labels=[f"{market_cap}B", ""], startangle=90, counterclock=False)
+            else:
+                axs[i, 2].text(0.5, 0.5, "No Data", ha='center', va='center')
             axs[i, 2].set_title(f"{ticker} Market Cap")
 
             # Price and 52-Week Range
