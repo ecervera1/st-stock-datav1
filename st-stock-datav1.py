@@ -180,7 +180,7 @@ if st.button('Run'):
     roe = stock_data["ROE" * 100 if stock_data["ROE"] > 0 else 0
 
     # Iterate through tickers
-    for i, ticker in enumerate(tickers):
+    #for i, ticker in enumerate(tickers):
         # Create a horizontal bar chart with three bars side by side
         
         ax2 = axs[i, 2]
