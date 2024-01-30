@@ -173,7 +173,7 @@ if st.button('Run'):
 
     # Iterate through tickers
     for i, ticker in enumerate(tickers):
-        Scrape data for the ticker
+        #Scrape data for the ticker
         stock_data = scrape_stock_data(ticker)
 
         # Extract Profit Margin, ROA, and ROE values and convert to percentage
@@ -211,7 +211,8 @@ if st.button('Run'):
         ax2.set_yticklabels([])
 
         
-        
+    plt.tight_layout()
+    st.pyplot(fig)
 
     #ax1.set_aspect('equal', adjustable='box')
 
