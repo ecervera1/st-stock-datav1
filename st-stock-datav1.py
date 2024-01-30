@@ -194,21 +194,18 @@ if st.button('Run'):
         metric_names = ["Profit Margin", "ROA", "ROE"]
         bars = ax2.barh(metric_names, metrics, color=['#A3C5A8', '#B8D4B0', '#C8DFBB'])
         
-        for bar, label, value in zip(bars, metric_names, metrics):
-            # Label positioning inside or outside the bar based on value
-            label_x_position = bar.get_width() - 5 if bar.get_width() > 0 else bar.get_width() + 5
-            value_x_position = bar.get_width() + 5 if bar.get_width() > 0 else bar.get_width() - 5
+        for index, (label, value) in enumerate(zip(metric_names, metrics)):
+            # Adjusting the position dynamically
+            label_x_offset = max(-1, -0.1 * len(str(value)))
+            ax2.text(label_x_offset, index, label, va='center', ha='right', fontsize=16)
+
         
-            # Preventing overlap by adjusting position
-            if abs(label_x_position - value_x_position) < 10:  # Threshold for overlap
-                label_x_position = value_x_position - 10 if value_x_position > 0 else value_x_position + 10
-        
-            ax2.text(label_x_position, bar.get_y() + bar.get_height()/2, label, 
-                     ha='right' if bar.get_width() > 0 else 'left', va='center', fontsize=14)
-            ax2.text(value_x_position, bar.get_y() + bar.get_height()/2, f"{value:.2f}%", 
-                     ha='left' if bar.get_width() > 0 else 'right', va='center', fontsize=14)
-            
-        #ax2.set_aspect('equal', adjustable='box')
+            # Add bar label (metric name) to the left of the bar
+            #ax2.text(-1, index, label, va='center', ha='right', fontsize=16)
+
+            # Add value label
+            value_x_position = value + 1 if value >= 0 else value - 1
+            ax2.text(value_x_position, index, f"{value:.2f}%", va='center', ha='left' if value >= 0 else 'right', fontsize=16)
         
         ax2.spines['top'].set_visible(False)
         ax2.spines['right'].set_visible(False)
