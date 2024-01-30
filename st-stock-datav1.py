@@ -151,6 +151,7 @@ if st.button('Run'):
         ax1.set_xlim(0, 1)
         ax1.set_ylim(0, 1)
         ax1.axis('off')
-        plt.show()
+        #plt.show()
+        st.pyplot(fig)
 
     st.pyplot(fig)
