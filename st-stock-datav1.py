@@ -212,8 +212,8 @@ if st.button('Run'):
 
         
     #plt.tight_layout()
-    for ax in axs.flat:
-        ax.set_aspect('equal', adjustable='box')
+    #for ax in axs.flat:
+    #    ax.set_aspect('equal', adjustable='box')
     st.pyplot(fig, use_container_width=True)
     st.pyplot(fig)
 
