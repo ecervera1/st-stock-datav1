@@ -175,7 +175,7 @@ if st.button('Run'):
         ax1.axis('off')
         
         # Adjust bar width for less padding
-        #bar_width = 1
+        bar_width = 1
         
         # ROE ROA and PM      
         ax2 = axs[i, 2]
