@@ -11,7 +11,7 @@ def scrape_stock_summary(ticker):
         info = stock.info
 
         return {
-            "Price": info.get("currentPrice"),
+            "Current Price": info.get("currentPrice"),
             "Market Cap (B)": info.get("marketCap") / 1e9 if info.get("marketCap") else None, 
             "PE Ratio": info.get("trailingPE"),
             "PEG Ratio": info.get("pegRatio"),
@@ -19,7 +19,12 @@ def scrape_stock_summary(ticker):
             "ROA": info.get("returnOnAssets"),
             "ROE": info.get("returnOnEquity"),
             "52W Range": f"{info.get('fiftyTwoWeekLow')} - {info.get('fiftyTwoWeekHigh')}",
-            "Div Yield": info.get("dividendYield")
+            "Div Yield": info.get("dividendYield"),
+            "Beta": info.get("beta"),
+            "Forward Annual Dividend Yield": info.get("dividendYield") or 0,
+            "EPS per Year": info.get("trailingEps"),
+            "Revenue Growth": info.get("revenueGrowth"),
+            "Earnings Growth": info.get("earningsGrowth")
             
         }
     except Exception as e:
