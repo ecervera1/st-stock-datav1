@@ -130,7 +130,7 @@ if st.button('Run'):
 
     # Creating Charts
     num_subplots = len(tickers)
-    figsize_width =  20
+    figsize_width =  26
     figsize_height = num_subplots * 4  # Height of the entire figure
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
@@ -282,7 +282,7 @@ if st.button('Run'):
 
         
     #plt.tight_layout()
-    plt.constrained_layout()
+    #plt.constrained_layout()
     #for ax in axs.flat:
     #    ax.set_aspect('equal', adjustable='box')
     st.pyplot(fig, use_container_width=True)
