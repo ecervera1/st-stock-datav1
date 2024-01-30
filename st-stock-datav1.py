@@ -257,8 +257,8 @@ if st.button('Run'):
         ax4 = axs[4, i]
         stock_data = scrape_stock_data(ticker)
         current_price = stock_data["Current Price"]
-        week_low = stock_data["52 Week Low"]
-        week_high = stock_data["52 Week High"]
+        week_low = stock_data["52W Low"]
+        week_high = stock_data["52W High"]
     
         # Calculate padding for visual clarity
         padding = (week_high - week_low) * 0.05
