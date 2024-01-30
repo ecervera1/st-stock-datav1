@@ -124,8 +124,7 @@ if st.button('Run'):
     # Display the DataFrame as a table
     st.table(stock_data_transposed)
 
-    # CREATING CHARTS:
-
+    # Creating Charts
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
     fig, axs = plt.subplots(len(tickers), 6, figsize=(32, 8 * len(tickers)))
 
@@ -136,7 +135,7 @@ if st.button('Run'):
 
         # Market Cap Visualization (Second Column)
         ax1 = axs[i, 1]
-        market_cap = stock_data_list["Market Cap (B)"]
+        market_cap = stock_data_df.loc[ticker, "Market Cap (B)"]
         market_cap_in_billions = market_cap / 1_000_000_000
 
         circle = plt.Circle((0.5, 0.5), 0.4, color='lightblue')
@@ -152,4 +151,5 @@ if st.button('Run'):
         ax1.set_xlim(0, 1)
         ax1.set_ylim(0, 1)
         ax1.axis('off')
+
     st.pyplot(fig)
