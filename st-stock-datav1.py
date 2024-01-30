@@ -194,6 +194,7 @@ if st.button('Run'):
                 text_x = value - 5 if value < 0 else value - 1
                 ax2.text(text_x, bar.get_y() + bar.get_height()/2, f"{value:.2f}%", ha='left' if value < 0 else 'right', va='center', fontsize=14, color='black')
 
+        #ax2.set_aspect('equal', adjustable='box')
         # Set the title
         ax2.set_title(f"{ticker} - Financial Metrics")
 
@@ -211,6 +212,8 @@ if st.button('Run'):
 
         
     #plt.tight_layout()
+    for ax in axs.flat:
+    ax.set_aspect('equal', adjustable='box')
     st.pyplot(fig, use_container_width=True)
     st.pyplot(fig)
 
