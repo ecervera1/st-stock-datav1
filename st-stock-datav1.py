@@ -196,7 +196,7 @@ if st.button('Run'):
 
         #ax2.set_aspect('equal', adjustable='box')
         # Set the title
-        ax2.set_title(f"{ticker} - Financial Metrics")
+        #ax2.set_title(f"{ticker} - Financial Metrics")
 
         # Remove axes
         ax2.spines['top'].set_visible(False)
@@ -223,7 +223,7 @@ if st.button('Run'):
         line_color = 'green' if growth > 0 else 'red'
     
         bars = ax3.bar(["2022", "2023"], [previous_year_revenue_billion, current_year_revenue_billion], color=['blue', 'orange'])
-        ax3.set_title(f"{ticker} Revenue Comparison (2022 vs 2023)")
+        #ax3.set_title(f"{ticker} Revenue Comparison (2022 vs 2023)")
     
         # Adjust Y-axis limits to leave space above the bars
         ax3.set_ylim(0, max(previous_year_revenue_billion, current_year_revenue_billion) * 1.2)
@@ -250,6 +250,31 @@ if st.button('Run'):
         # Remove x and y ticks
         ax3.set_xticks([])
         ax3.set_yticks([])
+
+        # 52-Week Range (Fourth Column)
+        ax4 = axs[4, i]
+        stock_data = scrape_stock_data(ticker)
+        current_price = stock_data["Current Price"]
+        week_low = stock_data["52 Week Low"]
+        week_high = stock_data["52 Week High"]
+    
+        # Calculate padding for visual clarity
+        padding = (week_high - week_low) * 0.05
+        ax4.set_xlim(week_low - padding, week_high + padding)
+    
+        # Draw a horizontal line for the 52-week range
+        ax4.axhline(y=0.5, xmin=0, xmax=1, color='black', linewidth=3)
+    
+        # Plot the Current Price as a red dot
+        ax4.scatter(current_price, 0.5, color='red', s=200)
+    
+        # Annotations and labels
+        ax4.annotate(f'${current_price:.2f}', xy=(current_price, 0.5), fontsize=10, color='red', ha='center', va='bottom', xytext=(0, 10), textcoords='offset points')
+        ax4.annotate(f'${week_low:.2f}', xy=(week_low, 0.5), fontsize=10, color='black', ha='left', va='top', xytext=(5, -20), textcoords='offset points')
+        ax4.annotate(f'${week_high:.2f}', xy=(week_high, 0.5), fontsize=10, color='black', ha='right', va='top', xytext=(-5, -20), textcoords='offset points')
+    
+        # Remove axes
+        ax4.axis('off')
 
 
         
