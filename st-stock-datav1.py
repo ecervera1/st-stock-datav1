@@ -65,16 +65,11 @@ def get_financials(ticker):
     except Exception as e:
         st.error(f"Error fetching financials for {ticker}: {e}")
         return pd.DataFrame()
-
-# Streamlit App Layout
-st.title('Portfolio Management - Stock Comparative Analysis')
-
-# Input for stock tickers
-user_input = st.text_input("Enter stock tickers separated by commas", "LLY, ABT, MRNA, JNJ, BIIB, BMY, PFE, AMGN, WBA")
-
-# Input for date range
-start_date = st.date_input("Start Date", pd.to_datetime("2023-01-01"))
-end_date = st.date_input("End Date", pd.to_datetime("2024-01-22"))
+# Function to fetch stock performance data
+def fetch_stock_performance(tickers, start_date, end_date):
+    # Fetch the historical close prices and volumes for the tickers
+    data = yf.download(tickers, start=start_date, end=end_date)
+    return data
 
 # Streamlit app layout
 st.title('Portfolio Management - Stock Comparative Analysis')
@@ -102,8 +97,8 @@ if st.button('Run'):
 
     # Create an empty list to store dictionaries of stock data
     stock_data_list = []
-    
-    
+
+
     # Loop through each ticker, scrape the data, and add it to the list
     for ticker in tickers:
         try:
@@ -128,5 +123,3 @@ if st.button('Run'):
 
     # Display the DataFrame as a table
     st.table(stock_data_transposed)
-
-
