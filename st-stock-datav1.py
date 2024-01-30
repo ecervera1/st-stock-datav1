@@ -142,13 +142,6 @@ if st.button('Run'):
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
     #fig, axs = plt.subplots(len(tickers), 6, figsize=(24, 8 * len(tickers)))
 
-    num_subplots = len(tickers)
-    figsize_width =  6
-    figsize_height = num_subplots * 4  # Height of the entire figure
-
-    # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
-    fig, axs = plt.subplots(num_subplots, 6, figsize=(figsize_width, figsize_height))
-
     #Scrape data for the ticker
     stock_data = scrape_stock_data(ticker)
 
@@ -157,9 +150,12 @@ if st.button('Run'):
     roa = stock_data["ROA"] * 100 if stock_data["ROA"] > 0 else 0
     roe = stock_data["ROE" * 100 if stock_data["ROE"] > 0 else 0
 
-    # Iterate through tickers
-    #for i, ticker in enumerate(tickers):
-        # Create a horizontal bar chart with three bars side by side
+    num_subplots = len(tickers)
+    figsize_width =  6
+    figsize_height = num_subplots * 4  # Height of the entire figure
+
+    # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
+    fig, axs = plt.subplots(num_subplots, 6, figsize=(figsize_width, figsize_height))
     
     for i, ticker in enumerate(tickers):
         # Ticker Labels (First Column)
