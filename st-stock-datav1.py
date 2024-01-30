@@ -129,7 +129,7 @@ if st.button('Run'):
     st.table(stock_data_transposed)
 
     # Creating Charts
-    num_subplots = len(tickers) + 2
+    num_subplots = len(tickers) + 1
     figsize_width =  26
     figsize_height = num_subplots * 4  # Height of the entire figure
 
@@ -189,24 +189,26 @@ if st.button('Run'):
         
         # ROE ROA and PM      
         # Financial Metrics (Third Column)
-        ax2 = axs[i, 2]
+        # Financial Metrics (Third Column)
+        ax2 = axs[i, 2]  # Where i is the row index in your loop
         metrics = [profit_margin, roa, roe]
         metric_names = ["Profit Margin", "ROA", "ROE"]
         bars = ax2.barh(metric_names, metrics, color=['#A3C5A8', '#B8D4B0', '#C8DFBB'])
         
         for bar, label, value in zip(bars, metric_names, metrics):
-            # Label positioning inside or outside the bar based on value
-            label_x_position = bar.get_width() - 5 if bar.get_width() > 0 else bar.get_width() + 5
-            value_x_position = bar.get_width() + 5 if bar.get_width() > 0 else bar.get_width() - 5
+            # Adjust label and value position based on bar width
+            label_pos = -15 if bar.get_width() < 0 else bar.get_width() + 5
+            value_pos = bar.get_width() + 5 if bar.get_width() >= 0 else -15
         
-            # Preventing overlap by adjusting position
-            if abs(label_x_position - value_x_position) < 10:  # Threshold for overlap
-                label_x_position = value_x_position - 10 if value_x_position > 0 else value_x_position + 10
+            # Adjust label position if it's too close to the edge of the subplot
+            subplot_limit = ax2.get_xlim()[1]
+            if label_pos > subplot_limit - 10:
+                label_pos = subplot_limit - 10
         
-            ax2.text(label_x_position, bar.get_y() + bar.get_height()/2, label, 
-                     ha='right' if bar.get_width() > 0 else 'left', va='center', fontsize=14)
-            ax2.text(value_x_position, bar.get_y() + bar.get_height()/2, f"{value:.2f}%", 
-                     ha='left' if bar.get_width() > 0 else 'right', va='center', fontsize=14)
+            ax2.text(label_pos, bar.get_y() + bar.get_height() / 2, label,
+                     ha='center', va='center', fontsize=14)
+            ax2.text(value_pos, bar.get_y() + bar.get_height() / 2, f"{value:.2f}%",
+                     ha='center', va='center', fontsize=14)
         
         ax2.spines['top'].set_visible(False)
         ax2.spines['right'].set_visible(False)
@@ -214,6 +216,7 @@ if st.button('Run'):
         ax2.spines['left'].set_visible(False)
         ax2.set_xticks([])
         ax2.set_yticks([])
+
 
 
         # Revenue Comparison (Third Column)
