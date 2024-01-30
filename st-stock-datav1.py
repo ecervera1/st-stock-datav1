@@ -13,9 +13,14 @@ custom_css = """
     .stToolbarActions {
         display: none;
     }
+
+    .stActionButtonIcon {
+        display: none;
+    }
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
+
 
 
 
