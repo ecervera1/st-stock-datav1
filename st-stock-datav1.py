@@ -195,8 +195,8 @@ if st.button('Run'):
     
         # Financial Metrics (Fourth Column)
         # ROE ROA and PM
-        ax2 = axs[i, 3]
         #ax2 = axs[i, 2]
+        ax2 = axs[i, 3]
         metrics = [profit_margin, roa, roe]
         metric_names = ["Profit Margin", "ROA", "ROE"]
         bars = ax2.barh(metric_names, metrics, color=['#A3C5A8', '#B8D4B0', '#C8DFBB'])
