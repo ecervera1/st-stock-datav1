@@ -128,7 +128,7 @@ if st.button('Run'):
 
     # Creating Charts
     num_subplots = len(tickers)
-    figsize_width =  num_subplots * 6
+    figsize_width =  num_subplots * 4
     figsize_height = num_subplots * 4  # Height of the entire figure
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
