@@ -3,6 +3,8 @@ import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
+import portfolio_optimization_1 as po1
+import portfolio_optimization_2 as po2
 
 # Function to scrape summary stock data
 def scrape_stock_data(ticker):
@@ -83,7 +85,9 @@ user_input = st.text_input("Enter stock tickers separated by commas", "LLY, ABT,
 
 # Input for date range
 start_date = st.date_input("Start Date", pd.to_datetime("2023-01-01"))
-end_date = st.date_input("End Date", pd.to_datetime("2024-01-22"))
+#end_date = st.date_input("End Date", pd.to_datetime("2024-01-22"))
+default_end_date = datetime.today().date()
+end_date = st.date_input("End Date", default_end_date)
 
 # Button to run the scraper and plot stock performance
 if st.button('Run'):
@@ -97,6 +101,17 @@ if st.button('Run'):
     st.markdown(f'({start_date} - {end_date})')
     # Plotting the interactive line chart
     st.line_chart(data['Adj Close'])
+
+    last_10_years_end_date = end_date
+    last_10_years_start_date = last_10_years_end_date - pd.DateOffset(years=10)
+    data_last_10_years = fetch_stock_performance(tickers, last_10_years_start_date, last_10_years_end_date)
+
+    st.title('Stock Performance Chart (Last 10 Years)')
+    st.markdown(f'({last_10_years_start_date} - {last_10_years_end_date})')
+
+    # Plotting the interactive line chart for the last 10 years
+    st.line_chart(data_last_10_years['Adj Close'])
+    
     st.title('Stock Data')
 
     # Create an empty list to store dictionaries of stock data
@@ -287,3 +302,13 @@ if st.button('Run'):
 
     plt.tight_layout()
     st.pyplot(fig, use_container_width=True)
+
+    
+    #if st.button('Run Portfolio Optimizations'):
+    # Example: Call a function from portfolio_optimization_1.py
+    #result_po1 = po1.some_function()  # Replace with actual function and arguments
+    #st.write("Results from Portfolio Optimization 1:", result_po1)
+
+    # Example: Call a function from portfolio_optimization_2.py
+    #result_po2 = po2.another_function()  # Replace with actual function and arguments
+    #st.write("Results from Portfolio Optimization 2:", result_po2)
