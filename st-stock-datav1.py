@@ -73,12 +73,7 @@ def fetch_stock_performance(tickers, start_date, end_date):
     data = yf.download(tickers, start=start_date, end=end_date)
     return data
     
-# Function to scrape market cap data
-def scrape_market_cap(ticker):
-    stock = yf.Ticker(ticker)
-    info = stock.info
-    market_cap = info.get("marketCap")
-    return market_cap
+
 
 # Streamlit app layout
 st.title('Portfolio Management - Stock Comparative Analysis')
@@ -133,28 +128,16 @@ if st.button('Run'):
     # Display the DataFrame as a table
     st.table(stock_data_transposed)
 
-    # Subplots with row and column headers
-    figsize_width = 22
-    figsize_height = 6 * 4  # One extra row for column headers
+    # Creating Charts
     num_subplots = len(tickers)
-    row_headers = ["Market Cap", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
-    column_headers = tickers
+    figsize_width =  20
+    figsize_height = num_subplots * 4  # Height of the entire figure
 
-    fig, axs = plt.subplots(5, num_subplots + 1, figsize=(figsize_width, figsize_height))
+    # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
+    fig, axs = plt.subplots(num_subplots, 5, figsize=(figsize_width, figsize_height))
+    
+    for i, ticker in enumerate(tickers):
 
-    # Add column headers in the first row
-    for j, header in enumerate(column_headers):
-        axs[0, j + 1].axis('off')  # j + 1 because the first column is for row headers
-        axs[0, j + 1].text(0.5, 0.5, header, ha='center', va='center', fontsize=20, fontweight='bold')
-
-    # Add row headers in the first column
-    for i, header in enumerate(row_headers):
-        axs[i + 1, 0].axis('off')  # i + 1 to start from the second row
-        axs[i + 1, 0].text(0.5, 0.5, header, ha='center', va='center', fontsize=20, fontweight='bold')
-
-    for j, ticker in enumerate(tickers):
-        stock_data = scrape_stock_data(ticker)
-        
         # Function to scrape market cap data
         def scrape_market_cap(ticker):
             stock = yf.Ticker(ticker)
@@ -182,8 +165,7 @@ if st.button('Run'):
         axs[i, 0].text(0.5, 0.5, ticker, ha='center', va='center', fontsize=20)
 
         # Market Cap Visualization (Second Column)
-        #ax1 = axs[i, 1]
-        ax1 = axs[1, j + 1]
+        ax1 = axs[i, 1]
         market_cap = market_caps.get(ticker, 0)
         relative_size = market_cap / max_market_cap if max_market_cap > 0 else 0
         circle = plt.Circle((0.5, 0.5), relative_size * 0.5, color='lightblue')
@@ -199,8 +181,7 @@ if st.button('Run'):
         bar_width = 1
         
         # ROE ROA and PM      
-        #ax2 = axs[i, 2]
-        ax2 = axs[2, j + 1]
+        ax2 = axs[i, 2]
         bars = ax2.barh([1, 2, 3], [profit_margin, roa, roe], height=bar_width, color=['#A3C5A8', '#B8D4B0', '#C8DFBB'])
 
         
@@ -232,8 +213,7 @@ if st.button('Run'):
         ax2.set_yticklabels([])
 
         # Revenue Comparison (Third Column)
-        #ax3 = axs[i, 3]
-        ax3 = axs[3, j + 1]
+        ax3 = axs[i, 3]
         financials = get_financials(ticker)
         current_year_revenue = financials.loc["Total Revenue"][0]
         previous_year_revenue = financials.loc["Total Revenue"][1]
@@ -275,8 +255,7 @@ if st.button('Run'):
         ax3.set_yticks([])
 
         # 52-Week Range (Fourth Column)
-        #ax4 = axs[i, 4]
-        ax4 = axs[4, j + 1]
+        ax4 = axs[i, 4]
         stock_data = scrape_stock_data(ticker)
         current_price = stock_data["Current Price"]
         week_low = stock_data["52W Low"]
@@ -300,10 +279,8 @@ if st.button('Run'):
         # Remove axes
         ax4.axis('off')
 
-    for i, header in enumerate(row_headers):
-        axs[i, 0].axis('off')
-        axs[i, 0].text(0.5, 0.5, header, ha='center', va='center', fontsize=20, fontweight='bold')
-       
+
+        
     #plt.tight_layout()
     #for ax in axs.flat:
     #    ax.set_aspect('equal', adjustable='box')
