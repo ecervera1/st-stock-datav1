@@ -128,7 +128,7 @@ if st.button('Run'):
 
     # Creating Charts
     num_subplots = len(tickers)
-    figsize_width =  6
+    figsize_width =  12
     figsize_height = num_subplots * 4  # Height of the entire figure
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
@@ -154,9 +154,8 @@ if st.button('Run'):
         
         # Extract Profit Margin, ROA, and ROE values and convert to percentage
         profit_margin = stock_data["Profit Margin"] * 100
-        roa = stock_data["ROA"] * 100 if isinstance(stock_data["ROA"], (float, int)) and stock_data["ROA"] > 0 else 0
-        roe = stock_data["ROE"] * 100 if isinstance(stock_data["ROE"], (float, int)) and stock_data["ROE"] > 0 else 0
-
+        roa = stock_data["ROA"] * 100 if stock_data["ROA"] > 0 else 0
+        roe = stock_data["ROE"] * 100 if stock_data["ROE"] > 0 else 0
 
         # Ticker Labels (First Column)
         axs[i, 0].axis('off')
