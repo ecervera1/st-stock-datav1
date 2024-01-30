@@ -22,6 +22,8 @@ def scrape_stock_data(ticker):
             "ROA": info.get("returnOnAssets"),
             "ROE": info.get("returnOnEquity"),
             "52W Range": f"{info.get('fiftyTwoWeekLow')} - {info.get('fiftyTwoWeekHigh')}",
+            "52W Low": info.get("fiftyTwoWeekLow"),
+            "52W High":info.get("fiftyTwoWeekHigh"),
             "Div Yield": info.get("dividendYield"),
             "Beta": info.get("beta"),
             "Forward Annual Dividend Yield": info.get("dividendYield") or "-",
