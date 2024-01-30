@@ -167,11 +167,61 @@ if st.button('Run'):
         ax1.set_ylim(0, 1)
         ax1.axis('off')
 
+    # Revenue
+    # Loop through each ticker to create revenue comparison bar chart
+    for i, ticker in enumerate(tickers):
+        financials = get_financials(ticker)
+        current_year_revenue = financials.loc["Total Revenue"][0]
+        previous_year_revenue = financials.loc["Total Revenue"][1]
+    
+        current_year_revenue_billion = current_year_revenue / 1e9
+        previous_year_revenue_billion = previous_year_revenue / 1e9
+        growth = ((current_year_revenue_billion - previous_year_revenue_billion) / previous_year_revenue_billion) * 100
+    
+        # Determine line color based on growth direction
+        line_color = 'green' if growth > 0 else 'red'
+    
+        # Create a subplot for revenue comparison
+        ax2 = axs[i, 2]
+    
+        # Creating a bar chart
+        bars = ax2.bar(["2022", "2023"], [previous_year_revenue_billion, current_year_revenue_billion], color=[color_2022, color_2023])
+        ax2.set_title(f"{ticker} Revenue Comparison (2022 vs 2023)")
+    
+        # Adjust Y-axis limits to leave space above the bars
+        ax2.set_ylim(0, max(previous_year_revenue_billion, current_year_revenue_billion) * 1.2)
+    
+        # Adding value labels inside of the bars at the top in white
+        for bar in bars:
+            yval = bar.get_height()
+            ax2.text(bar.get_x() + bar.get_width() / 2, yval * 0.95, round(yval, 2), ha='center', va='top', fontsize=12, fontweight='bold', color='white')
+    
+        # Adding year labels inside of the bars toward the bottom
+        for i, bar in enumerate(bars):
+            ax2.text(bar.get_x() + bar.get_width() / 2, -0.08, ["2022", "2023"][i], ha='center', va='bottom', fontsize=12, fontweight='bold', color='white')
+    
+        # Adding growth line with color based on direction
+        ax2.plot(["2022", "2023"], [previous_year_revenue_billion, current_year_revenue_billion], color=line_color, marker='o', linestyle='-', linewidth=2)
+        ax2.text(1, current_year_revenue_billion * 1.05, f"{round(growth, 2)}%", color=line_color, ha='center', va='bottom', fontsize=12, fontweight='bold')
+    
+        # Remove axes lines
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['right'].set_visible(False)
+        ax2.spines['bottom'].set_visible(False)
+        ax2.spines['left'].set_visible(False)
+    
+        # Remove x and y ticks
+        ax2.set_xticks([])
+        ax2.set_yticks([])
+
+
     plt.tight_layout()
     st.pyplot(fig)
 
         
         
+
+    #ax1.set_aspect('equal', adjustable='box')
 
     #plt.subplots_adjust(wspace=0.5)
     #plt.tight_layout()
