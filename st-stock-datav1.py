@@ -128,6 +128,9 @@ if st.button('Run'):
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
     fig, axs = plt.subplots(len(tickers), 6, figsize=(32, 8 * len(tickers)))
 
+    # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
+    fig, axs = plt.subplots(len(tickers), 6, figsize=(32, 8 * len(tickers)))
+
     for i, ticker in enumerate(tickers):
         # Ticker Labels (First Column)
         axs[i, 0].axis('off')
@@ -144,14 +147,14 @@ if st.button('Run'):
         # Create a shadow effect for the text
         text = ax1.text(0.5, 0.5, f"{market_cap_in_billions:.2f}B", ha='center', va='center', fontsize=55, fontweight='bold', color='white')
         text.set_path_effects([
-            path_effects.Stroke(linewidth=2, foreground='black'),
+            path_effects.withStroke(linewidth=2, foreground='black'),
             path_effects.Normal()
         ])
 
         ax1.set_xlim(0, 1)
         ax1.set_ylim(0, 1)
         ax1.axis('off')
-        #plt.show()
-        st.pyplot(fig)
 
+    plt.subplots_adjust(wspace=0.5)
     st.pyplot(fig)
+
