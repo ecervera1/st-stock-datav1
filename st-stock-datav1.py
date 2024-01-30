@@ -3,6 +3,8 @@ import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
+import matplotlib.patheffects as path_effects
+
 
 # Function to scrape stock data
 def scrape_stock_data(ticker):
