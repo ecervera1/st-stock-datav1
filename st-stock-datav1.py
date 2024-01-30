@@ -179,12 +179,12 @@ if st.button('Run'):
         ax1.set_ylim(0, 1)
         ax1.axis('off')
 
-        # ROE ROA and PM
-        # Adjust bar width for less padding
-        bar_width = 1
-        
+        # ROE ROA and PM      
         ax2 = axs[i, 2]
         bars = ax2.barh([1, 2, 3], [profit_margin, roa, roe], height=bar_width, color=['#A3C5A8', '#B8D4B0', '#C8DFBB'])
+
+        # Adjust bar width for less padding
+        bar_width = 1
 
         bar_labels = ["Profit Margin", "ROA", "ROE"]
         for bar, label in zip(bars, bar_labels):
