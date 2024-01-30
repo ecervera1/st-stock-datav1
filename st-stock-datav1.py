@@ -163,6 +163,7 @@ if st.button('Run'):
         
         
 
-    plt.subplots_adjust(wspace=0.5)
+    #plt.subplots_adjust(wspace=0.5)
+    plt.tight_layout()
     st.pyplot(fig)
 
