@@ -134,7 +134,7 @@ if st.button('Run'):
     figsize_height = num_subplots * 4  # Height of the entire figure
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
-    fig, axs = plt.subplots(num_subplots, 5, figsize=(figsize_width, figsize_height))
+    fig, axs = plt.subplots(num_subplots, 5, figsize=(figsize_width, figsize_height), gridspec_kw={'wspace': 0.5})
 
     # Adding labels in the first row
     labels = ["Ticker", "Market Cap", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
@@ -208,7 +208,7 @@ if st.button('Run'):
             ax2.text(value_x_position, bar.get_y() + bar.get_height()/2, f"{value:.2f}%", 
                      ha='left' if bar.get_width() > 0 else 'right', va='center', fontsize=14)
             
-        ax2.set_aspect('equal', adjustable='box')
+        #ax2.set_aspect('equal', adjustable='box')
         
         ax2.spines['top'].set_visible(False)
         ax2.spines['right'].set_visible(False)
