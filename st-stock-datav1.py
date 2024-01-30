@@ -11,12 +11,12 @@ from datetime import datetime
 custom_css = """
 <style>
     .stToolbarActions {
-        visibility: hidden;
-        display: none; /* Example: Hide the toolbar actions */
+        display: none;
     }
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
+
 
 
 
