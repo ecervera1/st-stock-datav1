@@ -73,7 +73,12 @@ def fetch_stock_performance(tickers, start_date, end_date):
     data = yf.download(tickers, start=start_date, end=end_date)
     return data
     
-
+# Function to scrape market cap data
+def scrape_market_cap(ticker):
+    stock = yf.Ticker(ticker)
+    info = stock.info
+    market_cap = info.get("marketCap")
+    return market_cap
 
 # Streamlit app layout
 st.title('Portfolio Management - Stock Comparative Analysis')
