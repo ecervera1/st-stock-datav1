@@ -93,44 +93,4 @@ if st.button('Run'):
     st.title('Stock Data')
     st.table(stock_summary_df)
 
-    # Plotting Financial Metrics and Revenue Comparison
-    fig, axs = plt.subplots(len(tickers), 4, figsize=(24, 6 * len(tickers)))
-    for i, ticker in enumerate(tickers):
-        financial_metrics = fetch_financial_metrics(ticker)
-        financials = get_financials(ticker)
-        if financial_metrics and not financials.empty:
-            # Financial Metrics
-            profit_margin = financial_metrics["Profit Margin"]
-            roa = financial_metrics["ROA"]
-            roe = financial_metrics["ROE"]
-            axs[i, 0].barh(["Profit Margin", "ROA", "ROE"], [profit_margin, roa, roe], color=['blue', 'green', 'red'])
-            axs[i, 0].set_title(f"{ticker} Financial Metrics")
 
-            # Revenue Comparison
-            current_year_revenue = financials.loc["Total Revenue"][0] / 1e9
-            previous_year_revenue = financials.loc["Total Revenue"][1] / 1e9
-            growth = ((current_year_revenue - previous_year_revenue) / previous_year_revenue) * 100
-            axs[i, 1].bar(["Last Year", "This Year"], [previous_year_revenue, current_year_revenue], color=['orange', 'blue'])
-            axs[i, 1].set_title(f"{ticker} Revenue Comparison")
-            axs[i, 1].text(1, current_year_revenue, f"{growth:.2f}%", ha='center')
-
-            # Market Cap
-            market_cap = stock_summaries[i].get("Market Cap (B)", 0)
-            if market_cap > 0:  # Ensure positive value for market cap
-                axs[i, 2].pie([market_cap, 100-market_cap], labels=[f"{market_cap}B", ""], startangle=90, counterclock=False)
-            else:
-                axs[i, 2].text(0.5, 0.5, "No Data", ha='center', va='center')
-            axs[i, 2].set_title(f"{ticker} Market Cap")
-
-            # Price and 52-Week Range
-            price = stock_summaries[i].get("Price", 0)
-            low_52w = stock_summaries[i].get("52W Range").split(' - ')[0]
-            high_52w = stock_summaries[i].get("52W Range").split(' - ')[1]
-            axs[i, 3].axhline(y=0.5, xmin=0, xmax=1, color='black', linewidth=3)
-            axs[i, 3].scatter(price, 0.5, color='red', s=200)
-            axs[i, 3].annotate(f'${price}', (price, 0.5), fontsize=12, ha='center', va='bottom')
-            axs[i, 3].set_xlim(float(low_52w), float(high_52w))
-            axs[i, 3].axis('off')
-            axs[i, 3].set_title(f"{ticker} 52-Week Range")
-
-    st.pyplot(fig)
