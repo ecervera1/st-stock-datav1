@@ -5,12 +5,15 @@ import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
 
 # Function to scrape summary stock data
-def scrape_stock_summary(ticker):
-    try:
-        stock = yf.Ticker(ticker)
-        info = stock.info
+def scrape_stock_data(ticker):
+    stock = yf.Ticker(ticker)
+    info = stock.info
 
-        return {
+    growth_ratio = info.get("revenueGrowth")
+    pe_ratio = info.get("trailingPE")
+    earnings_growth = info.get("revenueGrowth")
+
+    data = {
             "Current Price": info.get("currentPrice"),
             "Market Cap (B)": info.get("marketCap") / 1e9 if info.get("marketCap") else None, 
             "PE Ratio": info.get("trailingPE"),
@@ -27,9 +30,7 @@ def scrape_stock_summary(ticker):
             "Earnings Growth": info.get("earningsGrowth")
             
         }
-    except Exception as e:
-        st.error(f"Error fetching summary data for {ticker}: {e}")
-        return {}
+    return data
 
 # Function to fetch financial metrics
 def fetch_financial_metrics(ticker):
@@ -66,6 +67,16 @@ def get_financials(ticker):
         return pd.DataFrame()
 
 # Streamlit App Layout
+st.title('Portfolio Management - Stock Comparative Analysis')
+
+# Input for stock tickers
+user_input = st.text_input("Enter stock tickers separated by commas", "LLY, ABT, MRNA, JNJ, BIIB, BMY, PFE, AMGN, WBA")
+
+# Input for date range
+start_date = st.date_input("Start Date", pd.to_datetime("2023-01-01"))
+end_date = st.date_input("End Date", pd.to_datetime("2024-01-22"))
+
+# Streamlit app layout
 st.title('Portfolio Management - Stock Comparative Analysis')
 
 # Input for stock tickers
