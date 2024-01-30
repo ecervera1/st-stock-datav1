@@ -295,25 +295,25 @@ if st.button('Run'):
             fig, ax5 = plt.subplots(figsize=(8, 4))
             # Calculate padding for visual clarity
             padding = (row["52 Week High"] - row["52 Week Low"]) * 0.05
-            ax.set_xlim(row["52 Week Low"] - padding, row["52 Week High"] + padding)
-
+            ax5.set_xlim(row["52 Week Low"] - padding, row["52 Week High"] + padding)
+        
             # Draw a horizontal line for the 52-week range
             ax5.axhline(y=0.5, xmin=0, xmax=1, color='black', linewidth=3)  # Use y=0.5 to place the line in the middle of the y-axis
-
+        
             # Plot the Current Price as a red dot
             ax5.scatter(row["Current Price"], 0.5, color='red', s=200)  # Use y=0.5 to match the line's y-axis
-
+        
             # Remove axes
             ax5.axis('off')
-
+        
             # Annotate Current Price
             ax5.annotate(f'${row["Current Price"]:.2f}', xy=(row["Current Price"], 0.5), fontsize=50, color='red', fontweight ='bold',
                         ha='center', va='bottom', xytext=(0, 10), textcoords='offset points')
-
+        
             # Annotate 52 Week Low and High
             ax5.annotate(f'${row["52 Week Low"]:.2f}', xy=(row["52 Week Low"], 0.5), fontsize=35, color='black', fontweight='bold',
                         ha='left', va='top', xytext=(5, -20), textcoords='offset points')
             ax5.annotate(f'${row["52 Week High"]:.2f}', xy=(row["52 Week High"], 0.5), fontsize=35, color='black', fontweight='bold',
                         ha='right', va='top', xytext=(-5, -20), textcoords='offset points')
-
-        st.pyplot(fig)
+        
+            st.pyplot(fig)
