@@ -207,6 +207,8 @@ if st.button('Run'):
                      ha='right' if bar.get_width() > 0 else 'left', va='center', fontsize=14)
             ax2.text(value_x_position, bar.get_y() + bar.get_height()/2, f"{value:.2f}%", 
                      ha='left' if bar.get_width() > 0 else 'right', va='center', fontsize=14)
+            
+        ax2.set_aspect('equal', adjustable='box')
         
         ax2.spines['top'].set_visible(False)
         ax2.spines['right'].set_visible(False)
