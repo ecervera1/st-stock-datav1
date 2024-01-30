@@ -140,8 +140,15 @@ if st.button('Run'):
 
     
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
-    fig, axs = plt.subplots(len(tickers), 6, figsize=(24, 8 * len(tickers)))
+    #fig, axs = plt.subplots(len(tickers), 6, figsize=(24, 8 * len(tickers)))
 
+    num_subplots = len(tickers)
+    figsize_width = 8  # Width of each subplot
+    figsize_height = num_subplots * 4  # Height of the entire figure
+
+    # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
+    fig, axs = plt.subplots(num_subplots, 6, figsize=(figsize_width, figsize_height))
+    
     for i, ticker in enumerate(tickers):
         # Ticker Labels (First Column)
         axs[i, 0].axis('off')
