@@ -129,14 +129,21 @@ if st.button('Run'):
     st.table(stock_data_transposed)
 
     # Creating Charts
-    num_subplots = len(tickers)
+    num_subplots = len(tickers) + 1
     figsize_width =  26
     figsize_height = num_subplots * 4  # Height of the entire figure
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
     fig, axs = plt.subplots(num_subplots, 5, figsize=(figsize_width, figsize_height))
+
+    # Adding labels in the first row
+    labels = ["Ticker", "Market Cap", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
+    for j in range(5):
+        axs[0, j].axis('off')
+        axs[0, j].text(0.5, 0.5, labels[j], ha='center', va='center', fontsize=20, fontweight='bold')
+
     
-    for i, ticker in enumerate(tickers):
+    for i, ticker in enumerate(tickers, start=1):
 
         # Function to scrape market cap data
         def scrape_market_cap(ticker):
