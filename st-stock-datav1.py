@@ -134,11 +134,11 @@ if st.button('Run'):
     figsize_height = num_subplots * 4  # Height of the entire figure
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
-    fig, axs = plt.subplots(num_subplots, 6, figsize=(figsize_width, figsize_height))
+    fig, axs = plt.subplots(num_subplots, 5, figsize=(figsize_width, figsize_height))
 
     # Adding labels in the first row
-    labels = ["Ticker", "Market Cap", " ", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
-    for j in range(6):
+    labels = ["Ticker", "Market Cap", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
+    for j in range(5):
         axs[0, j].axis('off')
         axs[0, j].text(0.5, 0.5, labels[j], ha='center', va='center', fontsize=25, fontweight='bold')
 
@@ -186,17 +186,10 @@ if st.button('Run'):
         
         # Adjust bar width for less padding
         bar_width = 1
-
-        ax_labels = axs[i, 2]
-        ax_labels.axis('off')
-        metric_names = ["Profit Margin", "ROA", "ROE"]
-        for j, label in enumerate(metric_names):
-            ax_labels.text(0.5, j, label, ha='center', va='center', fontsize=14)
-    
-        # Financial Metrics (Fourth Column)
-        # ROE ROA and PM
-        #ax2 = axs[i, 2]
-        ax2 = axs[i, 3]
+        
+        # ROE ROA and PM      
+        # Financial Metrics (Third Column)
+        ax2 = axs[i, 2]
         metrics = [profit_margin, roa, roe]
         metric_names = ["Profit Margin", "ROA", "ROE"]
         bars = ax2.barh(metric_names, metrics, color=['#A3C5A8', '#B8D4B0', '#C8DFBB'])
@@ -226,7 +219,7 @@ if st.button('Run'):
 
 
         # Revenue Comparison (Third Column)
-        ax3 = axs[i, 4]
+        ax3 = axs[i, 3]
         financials = get_financials(ticker)
         current_year_revenue = financials.loc["Total Revenue"][0]
         previous_year_revenue = financials.loc["Total Revenue"][1]
@@ -268,7 +261,7 @@ if st.button('Run'):
         ax3.set_yticks([])
 
         # 52-Week Range (Fourth Column)
-        ax4 = axs[i, 5]
+        ax4 = axs[i, 4]
         stock_data = scrape_stock_data(ticker)
         current_price = stock_data["Current Price"]
         week_low = stock_data["52W Low"]
