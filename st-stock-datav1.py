@@ -236,8 +236,9 @@ if st.button('Run'):
             ax3.text(bar.get_x() + bar.get_width()/2, yval * .95, round(yval, 2), ha='center', va='top', fontsize=18, fontweight='bold', color='white')
     
         # Adding year labels inside of the bars toward the bottom
-        for i, bar in enumerate(bars):
-            ax3.text(bar.get_x() + bar.get_width()/2, -0.08, ["2022", "2023"][i], ha='center', va='bottom', fontsize=18, fontweight='bold', color='white')
+        # The 'i' in the for loop below should be changed to avoid conflicts
+        for bar_idx, bar in enumerate(bars):
+            ax3.text(bar.get_x() + bar.get_width()/2, -0.08, ["2022", "2023"][bar_idx], ha='center', va='bottom', fontsize=18, fontweight='bold', color='white')
     
         # Adding growth line with color based on direction
         ax3.plot(["2022", "2023"], [previous_year_revenue_billion, current_year_revenue_billion], color=line_color, marker='o', linestyle='-', linewidth=2)
