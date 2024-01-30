@@ -171,7 +171,7 @@ if st.button('Run'):
         circle = plt.Circle((0.5, 0.5), relative_size * 0.5, color='lightblue')
         ax1.add_artist(circle)
         ax1.set_aspect('equal', adjustable='box')
-        text = ax1.text(0.5, 0.5, f"{market_cap / 1e9:.2f}B", ha='center', va='center', fontsize=15)
+        text = ax1.text(0.5, 0.5, f"{market_cap / 1e9:.2f}B", ha='center', va='center', fontsize=20)
         text.set_path_effects([path_effects.Stroke(linewidth=2, foreground='black'), path_effects.Normal()])
         ax1.set_xlim(0, 1)
         ax1.set_ylim(0, 1)
@@ -194,7 +194,7 @@ if st.button('Run'):
         for bar, value in zip(bars, [profit_margin, roa, roe]):
             if value != 0:  # Check if the value is not equal to 0
                 text_x = value - 5 if value < 0 else value - 1
-                ax2.text(text_x, bar.get_y() + bar.get_height()/2, f"{value:.2f}%", ha='left' if value < 0 else 'right', va='center', fontsize=14, color='black')
+                ax2.text(text_x, bar.get_y() + bar.get_height()/2, f"{value:.2f}%", ha='left' if value < 0 else 'right', va='center', fontsize=16, color='black')
 
         #ax2.set_aspect('equal', adjustable='box')
         # Set the title
