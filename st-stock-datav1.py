@@ -254,7 +254,7 @@ if st.button('Run'):
         ax3.set_yticks([])
 
         # 52-Week Range (Fourth Column)
-        ax4 = axs[4, i]
+        ax4 = axs[i, 4]
         stock_data = scrape_stock_data(ticker)
         current_price = stock_data["Current Price"]
         week_low = stock_data["52W Low"]
