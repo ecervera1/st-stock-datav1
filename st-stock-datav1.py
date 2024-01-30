@@ -178,7 +178,7 @@ if st.button('Run'):
 
         # Extract Profit Margin, ROA, and ROE values and convert to percentage
         profit_margin = stock_data["Profit Margin"] * 100
-        roa = stock_data["ROA", 0] * 100
+        roa = stock_data["ROA"] * 100 if value > 0 else 0
         roe = stock_data["ROE", 0] * 100
 
         # Create a horizontal bar chart with three bars side by side
