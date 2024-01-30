@@ -3,8 +3,8 @@ import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
-import portfolio_optimization_1 as po1
-import portfolio_optimization_2 as po2
+#import portfolio_optimization_1 as po1
+#import portfolio_optimization_2 as po2
 
 # Function to scrape summary stock data
 def scrape_stock_data(ticker):
