@@ -171,13 +171,13 @@ if st.button('Run'):
     # Adjust bar width for less padding
     bar_width = 1
 
-        #Scrape data for the ticker
-        stock_data = scrape_stock_data(ticker)
+    #Scrape data for the ticker
+    stock_data = scrape_stock_data(ticker)
 
-        # Extract Profit Margin, ROA, and ROE values and convert to percentage
-        profit_margin = stock_data["Profit Margin"] * 100
-        roa = stock_data["ROA"] * 100 if stock_data["ROA"] > 0 else 0
-        roe = stock_data["ROE" * 100 if stock_data["ROE"] > 0 else 0
+    # Extract Profit Margin, ROA, and ROE values and convert to percentage
+    profit_margin = stock_data["Profit Margin"] * 100
+    roa = stock_data["ROA"] * 100 if stock_data["ROA"] > 0 else 0
+    roe = stock_data["ROE" * 100 if stock_data["ROE"] > 0 else 0
 
     # Iterate through tickers
     for i, ticker in enumerate(tickers):
