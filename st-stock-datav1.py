@@ -135,6 +135,12 @@ if st.button('Run'):
 
         # Market Cap Visualization (Second Column)
         ax1 = axs[i, 1]
+        def scrape_market_cap(ticker):
+            stock = yf.Ticker(ticker)
+            info = stock.info
+            market_cap = info.get("marketCap")
+            return market_cap
+        
         market_cap = scrape_market_cap(ticker)
         market_cap_in_billions = market_cap / 1_000_000_000
 
@@ -159,4 +165,3 @@ if st.button('Run'):
     st.pyplot(fig, use_container_width=True)
     #plt.subplots_adjust(wspace=0.5, hspace=0.5)
     st.pyplot(fig)
-
