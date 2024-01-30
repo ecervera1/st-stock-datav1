@@ -137,7 +137,7 @@ if st.button('Run'):
     fig, axs = plt.subplots(num_subplots, 6, figsize=(figsize_width, figsize_height))
 
     # Adding labels in the first row
-    labels = ["Ticker", "Market Cap", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
+    labels = ["Ticker", "Market Cap", " ", "Financial Metrics", "Revenue Comparison", "52-Week Range"]
     for j in range(6):
         axs[0, j].axis('off')
         axs[0, j].text(0.5, 0.5, labels[j], ha='center', va='center', fontsize=25, fontweight='bold')
