@@ -8,13 +8,19 @@ from datetime import datetime
 #import portfolio_optimization_2 as po2
 
 
-hide_menu_style = """
-<style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-</style>
+hide_github_script = """
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var githubLink = document.querySelector(".element-container a[href*='github.com']");
+  if (githubLink) {
+    githubLink.style.display = "none";
+  }
+});
+</script>
 """
-st.markdown(hide_menu_style, unsafe_allow_html=True)
+
+# Inject the JavaScript to hide the GitHub link
+st.markdown(hide_github_script, unsafe_allow_html=True)
 
 
 
