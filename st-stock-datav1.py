@@ -280,18 +280,5 @@ if st.button('Run'):
         ax4.axis('off')
 
 
-        
-    #plt.tight_layout()
-    #plt.constrained_layout()
-    #for ax in axs.flat:
-    #    ax.set_aspect('equal', adjustable='box')
+    plt.tight_layout()
     st.pyplot(fig, use_container_width=True)
-    #st.pyplot(fig)
-
-    #ax1.set_aspect('equal', adjustable='box')
-
-    #plt.subplots_adjust(wspace=0.5)
-    #plt.tight_layout()
-    #st.pyplot(fig, use_container_width=True)
-    #plt.subplots_adjust(wspace=0.5, hspace=0.5)
-    #st.pyplot(fig)
