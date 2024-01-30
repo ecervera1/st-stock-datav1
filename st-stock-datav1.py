@@ -129,7 +129,7 @@ if st.button('Run'):
     fig, axs = plt.subplots(len(tickers), 6, figsize=(32, 8 * len(tickers)))
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
-    fig, axs = plt.subplots(len(tickers), 6, figsize=(32, 8 * len(tickers)))
+    fig, axs = plt.subplots(len(tickers), 6, figsize=(24, 8 * len(tickers)))
 
     for i, ticker in enumerate(tickers):
         # Ticker Labels (First Column)
