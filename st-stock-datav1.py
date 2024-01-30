@@ -152,7 +152,7 @@ if st.button('Run'):
         ax1.set_ylim(0, 1)
         ax1.axis('off')
 
-        st.pyplot(fig)
+        
 
         # Revenue Comparison (Third Column) 222222222222222222222222222222222222222222222222222
         ax2 = axs[i, 2]
@@ -195,7 +195,7 @@ if st.button('Run'):
         ax2.set_xticks([])
         ax2.set_yticks([])
         
-        st.pyplot(fig)
+        
 
         # Financial Metrics (Fourth Column) 3333333333333333333333333333333333333333333333333333
         ax3 = axs[i, 3]
@@ -253,7 +253,7 @@ if st.button('Run'):
         ax.set_xticklabels([])
         ax.set_yticklabels([])
 
-        st.pyplot(fig)
+        
         # Price and 52 Week Range (Fifth Column) 44444444444444444444444444444444444444444444444444444
         ax4 = axs[i, 4]
 
@@ -324,4 +324,4 @@ if st.button('Run'):
             plt.tight_layout()
         
             st.pyplot(fig)
-        st.pyplot(fig)
+    st.pyplot(fig)
