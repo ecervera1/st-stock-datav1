@@ -135,11 +135,6 @@ if st.button('Run'):
 
         # Market Cap Visualization (Second Column)
         ax1 = axs[i, 1]
-        def scrape_market_cap(ticker):
-            stock = yf.Ticker(ticker)
-            info = stock.info
-            market_cap = info.get("marketCap")
-            return market_cap
         market_cap = scrape_market_cap(ticker)
         market_cap_in_billions = market_cap / 1_000_000_000
 
@@ -150,9 +145,8 @@ if st.button('Run'):
         text = ax1.text(0.5, 0.5, f"{market_cap_in_billions:.2f}B", ha='center', va='center', fontsize=55, fontweight='bold', color='white')
         text.set_path_effects([
             path_effects.withStroke(linewidth=2, foreground='black'),
-            path_effects.Normal()  # Corrected from 'path_effects.Normal()'
+            path_effects.Normal()
         ])
-
 
         ax1.set_xlim(0, 1)
         ax1.set_ylim(0, 1)
