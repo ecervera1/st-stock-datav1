@@ -166,6 +166,8 @@ if st.button('Run'):
             ax.set_xlim(0, 1)
             ax.set_ylim(0, 1)
             ax.axis('off')  # Turn off the axis lines and labels
+
+        st.pyplot(fig)
         
         
 
