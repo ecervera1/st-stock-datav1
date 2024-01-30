@@ -210,7 +210,8 @@ if st.button('Run'):
         ax2.set_yticklabels([])
 
         
-    plt.tight_layout()
+    #plt.tight_layout()
+    st.pyplot(fig, use_container_width=True)
     st.pyplot(fig)
 
     #ax1.set_aspect('equal', adjustable='box')
