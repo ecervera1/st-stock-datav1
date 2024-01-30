@@ -130,8 +130,8 @@ if st.button('Run'):
 
     # Creating Charts
     num_subplots = len(tickers)
-    figsize_width =  25
-    figsize_height = num_subplots * 4  # Height of the entire figure
+    figsize_width =  20
+    figsize_height = num_subplots * 3  # Height of the entire figure
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
     fig, axs = plt.subplots(num_subplots, 5, figsize=(figsize_width, figsize_height))
@@ -272,9 +272,9 @@ if st.button('Run'):
         ax4.scatter(current_price, 0.5, color='red', s=200)
     
         # Annotations and labels
-        ax4.annotate(f'${current_price:.2f}', xy=(current_price, 0.5), fontsize=10, color='red', ha='center', va='bottom', xytext=(0, 10), textcoords='offset points')
-        ax4.annotate(f'${week_low:.2f}', xy=(week_low, 0.5), fontsize=10, color='black', ha='left', va='top', xytext=(5, -20), textcoords='offset points')
-        ax4.annotate(f'${week_high:.2f}', xy=(week_high, 0.5), fontsize=10, color='black', ha='right', va='top', xytext=(-5, -20), textcoords='offset points')
+        ax4.annotate(f'${current_price:.2f}', xy=(current_price, 0.5), fontsize=16, color='red', ha='center', va='bottom', xytext=(0, 10), textcoords='offset points')
+        ax4.annotate(f'${week_low:.2f}', xy=(week_low, 0.5), fontsize=16, color='black', ha='left', va='top', xytext=(5, -20), textcoords='offset points')
+        ax4.annotate(f'${week_high:.2f}', xy=(week_high, 0.5), fontsize=16, color='black', ha='right', va='top', xytext=(-5, -20), textcoords='offset points')
     
         # Remove axes
         ax4.axis('off')
