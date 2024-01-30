@@ -143,7 +143,7 @@ if st.button('Run'):
     #fig, axs = plt.subplots(len(tickers), 6, figsize=(24, 8 * len(tickers)))
 
     num_subplots = len(tickers)
-    figsize_width =  st.pyplot(fig, use_container_width=True)/6 # Width of each subplot
+    figsize_width =  6
     figsize_height = num_subplots * 4  # Height of the entire figure
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
@@ -160,6 +160,7 @@ if st.button('Run'):
         relative_size = market_cap / max_market_cap if max_market_cap > 0 else 0
         circle = plt.Circle((0.5, 0.5), relative_size * 0.5, color='lightblue')
         ax1.add_artist(circle)
+        ax1.set_aspect('equal', adjustable='box')
         text = ax1.text(0.5, 0.5, f"{market_cap / 1e9:.2f}B", ha='center', va='center', fontsize=15)
         text.set_path_effects([path_effects.Stroke(linewidth=2, foreground='black'), path_effects.Normal()])
         ax1.set_xlim(0, 1)
