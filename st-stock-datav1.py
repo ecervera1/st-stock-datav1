@@ -125,8 +125,18 @@ if st.button('Run'):
     st.table(stock_data_transposed)
 
     # Creating Charts
+    # Function to scrape market cap data
+    def scrape_market_cap(ticker):
+        stock = yf.Ticker(ticker)
+        info = stock.info
+        market_cap = info.get("marketCap")
+        return market_cap
+    
+    # Get market cap data
     market_caps = {ticker: scrape_market_cap(ticker) for ticker in tickers}
-    max_market_cap = max(market_caps.values(), default=1)
+    
+    # Find the largest market cap for scaling
+    max_market_cap = max(market_caps.values())
 
     
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
