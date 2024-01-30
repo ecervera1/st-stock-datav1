@@ -129,7 +129,7 @@ if st.button('Run'):
     st.table(stock_data_transposed)
 
     # Creating Charts
-    num_subplots = len(tickers) + 1
+    num_subplots = len(tickers) + 2
     figsize_width =  26
     figsize_height = num_subplots * 4  # Height of the entire figure
 
