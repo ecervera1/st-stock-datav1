@@ -138,8 +138,12 @@ if st.button('Run'):
 
         # Market Cap Visualization (Second Column)
         ax1 = axs[i, 1]
-        market_cap = stock_data_df.loc[ticker, "Market Cap (B)"]
-
+        def scrape_market_cap(ticker):
+            stock = yf.Ticker(ticker)
+            info = stock.info
+            market_cap = info.get("marketCap")
+            return market_cap
+        market_cap = scrape_market_cap(ticker)
         market_cap_in_billions = market_cap / 1_000_000_000
 
         circle = plt.Circle((0.5, 0.5), 0.4, color='lightblue')
@@ -156,8 +160,8 @@ if st.button('Run'):
         ax1.set_xlim(0, 1)
         ax1.set_ylim(0, 1)
         ax1.axis('off')
-        plt.show()
-        plt.close()
+        
+        
 
     plt.subplots_adjust(wspace=0.5)
     st.pyplot(fig)
