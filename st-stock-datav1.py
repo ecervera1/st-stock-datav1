@@ -315,5 +315,7 @@ if st.button('Run'):
                         ha='left', va='top', xytext=(5, -20), textcoords='offset points')
             ax5.annotate(f'${row["52 Week High"]:.2f}', xy=(row["52 Week High"], 0.5), fontsize=35, color='black', fontweight='bold',
                         ha='right', va='top', xytext=(-5, -20), textcoords='offset points')
+
+            plt.tight_layout()
         
-            st.pyplot(fig)
+        st.pyplot(fig)
