@@ -162,7 +162,7 @@ if st.button('Run'):
 
         # Ticker Labels (First Column)
         axs[i, 0].axis('off')
-        axs[i, 0].text(0.5, 0.5, ticker, ha='center', va='center', fontsize=20)
+        axs[i, 0].text(0.5, 0.5, ticker, ha='center', va='center', fontsize=30)
 
         # Market Cap Visualization (Second Column)
         ax1 = axs[i, 1]
