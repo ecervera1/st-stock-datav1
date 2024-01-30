@@ -171,8 +171,6 @@ if st.button('Run'):
     # Adjust bar width for less padding
     bar_width = 1
 
-    # Iterate through tickers
-    for i, ticker in enumerate(tickers):
         #Scrape data for the ticker
         stock_data = scrape_stock_data(ticker)
 
@@ -181,7 +179,10 @@ if st.button('Run'):
         roa = stock_data["ROA"] * 100 if stock_data["ROA"] > 0 else 0
         roe = stock_data["ROE" * 100 if stock_data["ROE"] > 0 else 0
 
+    # Iterate through tickers
+    for i, ticker in enumerate(tickers):
         # Create a horizontal bar chart with three bars side by side
+        
         ax2 = axs[i, 2]
         bars = ax2.barh([1, 2, 3], [profit_margin, roa, roe], height=bar_width, color=['#A3C5A8', '#B8D4B0', '#C8DFBB'])
 
