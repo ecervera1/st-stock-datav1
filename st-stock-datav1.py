@@ -172,7 +172,7 @@ if st.button('Run'):
     bar_width = 1
 
     # Iterate through tickers
-    #for i, ticker in enumerate(tickers):
+    for i, ticker in enumerate(tickers):
         Scrape data for the ticker
         stock_data = scrape_stock_data(ticker)
 
