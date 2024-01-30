@@ -141,22 +141,31 @@ if st.button('Run'):
             market_cap = info.get("marketCap")
             return market_cap
         
-        market_cap = scrape_market_cap(ticker)
-        market_cap_in_billions = market_cap / 1_000_000_000
-
-        circle = plt.Circle((0.5, 0.5), 0.4, color='lightblue')
-        ax1.add_artist(circle)
-
-        # Create a shadow effect for the text
-        text = ax1.text(0.5, 0.5, f"{market_cap_in_billions:.2f}B", ha='center', va='center', fontsize=55, fontweight='bold', color='white')
-        text.set_path_effects([
-            path_effects.withStroke(linewidth=2, foreground='black'),
-            path_effects.Normal()
-        ])
-
-        ax1.set_xlim(0, 1)
-        ax1.set_ylim(0, 1)
-        ax1.axis('off')
+        market_caps = {ticker: scrape_market_cap(ticker) for ticker in tickers}
+        
+        # Find the largest market cap for scaling
+        max_market_cap = max(market_caps.values())
+        
+        # Prepare data for visualization
+        vis_data = {ticker: {'Market Cap': cap, 'Relative Size': cap / max_market_cap} for ticker, cap in market_caps.items()}
+        
+        # Create separate plots for each ticker
+        for ticker, data in vis_data.items():
+            fig, ax = plt.subplots(figsize=(8, 8))
+            circle = plt.Circle((0.5, 0.5), data['Relative Size'] * 0.5, color='lightblue')
+            ax.add_artist(circle)
+            market_cap_in_billions = data['Market Cap'] / 1_000_000_000
+            text = ax.text(0.5, 0.5, f"{market_cap_in_billions:.2f}B", ha='center', va='center', fontsize=55, fontweight='bold', color='white')
+        
+            # Create a shadow effect by adding another text element with a black outline
+            text.set_path_effects([
+                path_effects.Stroke(linewidth=2, foreground='black'),
+                path_effects.Normal()
+            ])
+        
+            ax.set_xlim(0, 1)
+            ax.set_ylim(0, 1)
+            ax.axis('off')  # Turn off the axis lines and labels
         
         
 
