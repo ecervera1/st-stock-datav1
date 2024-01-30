@@ -152,7 +152,9 @@ if st.button('Run'):
         axs[i + 1, 0].axis('off')  # i + 1 to start from the second row
         axs[i + 1, 0].text(0.5, 0.5, header, ha='center', va='center', fontsize=20, fontweight='bold')
 
-
+    for j, ticker in enumerate(tickers):
+        stock_data = scrape_stock_data(ticker)
+        
         # Function to scrape market cap data
         def scrape_market_cap(ticker):
             stock = yf.Ticker(ticker)
