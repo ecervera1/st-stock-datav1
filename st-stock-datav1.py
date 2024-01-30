@@ -70,6 +70,27 @@ def fetch_stock_performance(tickers, start_date, end_date):
     # Fetch the historical close prices and volumes for the tickers
     data = yf.download(tickers, start=start_date, end=end_date)
     return data
+    
+# Function to scrape market cap data
+def scrape_market_cap(ticker):
+    stock = yf.Ticker(ticker)
+    info = stock.info
+    market_cap = info.get("marketCap")
+    return market_cap
+
+# Get market cap data
+market_caps = {ticker: scrape_market_cap(ticker) for ticker in tickers}
+
+# Find the largest market cap for scaling
+max_market_cap = max(market_caps.values())
+
+#Scrape data for the ticker
+stock_data = scrape_stock_data(ticker)
+
+# Extract Profit Margin, ROA, and ROE values and convert to percentage
+profit_margin = stock_data["Profit Margin"] * 100
+roa = stock_data["ROA"] * 100 if stock_data["ROA"] > 0 else 0
+roe = stock_data["ROE" * 100 if stock_data["ROE"] > 0 else 0
 
 # Streamlit app layout
 st.title('Portfolio Management - Stock Comparative Analysis')
@@ -125,31 +146,6 @@ if st.button('Run'):
     st.table(stock_data_transposed)
 
     # Creating Charts
-    # Function to scrape market cap data
-    def scrape_market_cap(ticker):
-        stock = yf.Ticker(ticker)
-        info = stock.info
-        market_cap = info.get("marketCap")
-        return market_cap
-    
-    # Get market cap data
-    market_caps = {ticker: scrape_market_cap(ticker) for ticker in tickers}
-    
-    # Find the largest market cap for scaling
-    max_market_cap = max(market_caps.values())
-
-    
-    # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
-    #fig, axs = plt.subplots(len(tickers), 6, figsize=(24, 8 * len(tickers)))
-
-    #Scrape data for the ticker
-    stock_data = scrape_stock_data(ticker)
-
-    # Extract Profit Margin, ROA, and ROE values and convert to percentage
-    profit_margin = stock_data["Profit Margin"] * 100
-    roa = stock_data["ROA"] * 100 if stock_data["ROA"] > 0 else 0
-    roe = stock_data["ROE" * 100 if stock_data["ROE"] > 0 else 0
-
     num_subplots = len(tickers)
     figsize_width =  6
     figsize_height = num_subplots * 4  # Height of the entire figure
