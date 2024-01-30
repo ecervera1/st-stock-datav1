@@ -1,0 +1,9 @@
+[browser]
+gatherUsageStats = false
+server.headless = true
+server.enableCORS = false
+menuItems = {
+  'Get Help' = ''
+  'Report a bug' = ''
+  'About' = ''
+}
