@@ -128,7 +128,7 @@ if st.button('Run'):
 
     # Creating Charts
     num_subplots = len(tickers)
-    figsize_width =  18
+    figsize_width =  20
     figsize_height = num_subplots * 4  # Height of the entire figure
 
     # Create a figure with subplots: X columns (Ticker, Market Cap, Revenue, Financial Metrics...) for each ticker
@@ -210,12 +210,54 @@ if st.button('Run'):
         ax2.set_xticklabels([])
         ax2.set_yticklabels([])
 
+        # Revenue Comparison (Third Column)
+        ax3 = axs[i, 3]
+        financials = get_financials(ticker)
+        current_year_revenue = financials.loc["Total Revenue"][0]
+        previous_year_revenue = financials.loc["Total Revenue"][1]
+    
+        current_year_revenue_billion = current_year_revenue / 1e9
+        previous_year_revenue_billion = previous_year_revenue / 1e9
+        growth = ((current_year_revenue_billion - previous_year_revenue_billion) / previous_year_revenue_billion) * 100
+    
+        line_color = 'green' if growth > 0 else 'red'
+    
+        bars = ax3.bar(["2022", "2023"], [previous_year_revenue_billion, current_year_revenue_billion], color=['blue', 'orange'])
+        ax3.set_title(f"{ticker} Revenue Comparison (2022 vs 2023)")
+    
+        # Adjust Y-axis limits to leave space above the bars
+        ax3.set_ylim(0, max(previous_year_revenue_billion, current_year_revenue_billion) * 1.2)
+    
+        # Adding value labels inside of the bars at the top in white
+        for bar in bars:
+            yval = bar.get_height()
+            ax3.text(bar.get_x() + bar.get_width()/2, yval * .95, round(yval, 2), ha='center', va='top', fontsize=18, fontweight='bold', color='white')
+    
+        # Adding year labels inside of the bars toward the bottom
+        for i, bar in enumerate(bars):
+            ax3.text(bar.get_x() + bar.get_width()/2, -0.08, ["2022", "2023"][i], ha='center', va='bottom', fontsize=18, fontweight='bold', color='white')
+    
+        # Adding growth line with color based on direction
+        ax3.plot(["2022", "2023"], [previous_year_revenue_billion, current_year_revenue_billion], color=line_color, marker='o', linestyle='-', linewidth=2)
+        ax3.text(1, current_year_revenue_billion * 1.05, f"{round(growth, 2)}%", color=line_color, ha='center', va='bottom', fontsize=16)
+    
+        # Remove axes lines
+        ax3.spines['top'].set_visible(False)
+        ax3.spines['right'].set_visible(False)
+        ax3.spines['bottom'].set_visible(False)
+        ax3.spines['left'].set_visible(False)
+    
+        # Remove x and y ticks
+        ax3.set_xticks([])
+        ax3.set_yticks([])
+
+
         
     #plt.tight_layout()
     #for ax in axs.flat:
     #    ax.set_aspect('equal', adjustable='box')
     st.pyplot(fig, use_container_width=True)
-    st.pyplot(fig)
+    #st.pyplot(fig)
 
     #ax1.set_aspect('equal', adjustable='box')
 
