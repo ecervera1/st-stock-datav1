@@ -2,3 +2,7 @@ streamlit
 yfinance
 pandas
 matplotlib
+PyPortfolioOpt
+pandas_datareader
+scipy
+seaborn
