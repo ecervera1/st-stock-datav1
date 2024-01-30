@@ -12,12 +12,12 @@ from datetime import datetime
 
 custom_css = """
 <style>
-    button[kind="header"] {
-        display: none;
+    .stActionButton button[kind="header"] {
+        visibility: hidden;
     }
 
-    div[data-testid="stActionButtonIcon"] {
-        display: none;
+    .stActionButton div[data-testid="stActionButtonIcon"] {
+        visibility: hidden;
     }
 </style>
 """
